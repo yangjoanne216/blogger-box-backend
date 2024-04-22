@@ -7,7 +7,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-
+@OpenAPIDefinition(
+		info = @Info(
+				title = "Blogger box backend",
+				description = "Blogger dox endpoints and apis",
+				contact = @Contact(name = "Yang", email = "yang.yang2@dauphine.eu"),
+				version = "1.0.0"
+		)
+)
 public class BloggerBoxBackendApplication {
 
 	public static void main(String[] args) {
