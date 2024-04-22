@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Hello world API",
         description = "My first hello world endpoints"
 )
-public class helloWordController {
+public class HelloWordController {
     @GetMapping("hello-world")
     public  String helloWorld(){
         return "Hello World!";

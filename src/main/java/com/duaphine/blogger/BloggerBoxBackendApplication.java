@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 @OpenAPIDefinition(
 		info = @Info(
-				title = "Blogger box backend",
+				title = "Blogger dox backend",
 				description = "Blogger dox endpoints and apis",
 				contact = @Contact(name = "Yang", email = "yang.yang2@dauphine.eu"),
 				version = "1.0.0"
