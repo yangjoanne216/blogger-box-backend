@@ -9,6 +9,10 @@ public class Category {
     public Category(UUID randomUUID, String my_first_category) {
     }
 
+    public Category() {
+
+    }
+
     public UUID getId() {
         return id;
     }

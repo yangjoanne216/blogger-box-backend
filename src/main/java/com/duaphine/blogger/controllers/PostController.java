@@ -1,5 +1,6 @@
 package com.duaphine.blogger.controllers;
 
+import com.duaphine.blogger.dto.PostRequest;
 import com.duaphine.blogger.models.Category;
 import com.duaphine.blogger.models.Post;
 import io.swagger.v3.oas.annotations.Operation;
@@ -7,6 +8,8 @@ import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,7 +23,7 @@ public class PostController {
 ● Retrieve all posts ordered by creation date
 ● Retrieve all posts per a category*/
     @GetMapping
-    public String retriveAllPosts(){
+    public String getAll(){
         return "all posts";
     }
     @PostMapping
@@ -28,32 +31,39 @@ public class PostController {
             summary = "creat a new post",
             description = ""
     )
-    public  String  createPost(@RequestBody Post post){
-        return ("Create new category with  id '%d', title '%s', content '%s' " +
-                "category id ''%d' and date '%tY-%tm-%td'").formatted(post.getId(),post.getTitle(),post.getContent(),post.getCategory_id(),post.getCreated_date());
+    public  Post  create(@RequestBody PostRequest request){
+        Post post = new Post();
+        post.setId(UUID.randomUUID());
+        post.setTitle(request.getTitle());
+        post.setContent(request.getContent());
+        post.setCreatedDate(new Date());
+        Category category = new Category();
+        category.setId(request.getId());
+        category.setName("new name");
+        post.setCategory(category);
+        return post;
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("{id}")
     @Operation(
             summary = "Update an existing post",
             description = ""
     )
-    public  String  updatePost(@Parameter(description = "id of post") int id,
-                                   @RequestBody Post post) {
-        return "update post '%d' with title '%s', content '%s' category id '%d' and date '%tY-%tm-%td'".formatted(id, post.getTitle(),post.getContent(),post.getCategory_id(),post.getCreated_date());
+    public  String  update(@Parameter(description = "id of post") int id,
+                                   @RequestBody PostRequest request) {
+        return "update post '%d' with title '%s', content '%s' category id '%d' and date '%tY-%tm-%td'".formatted(id, request.getTitle(),request.getContent(),request.getCategory(),request.getCreatedDate());
     }
 
-    @DeleteMapping ("/{id}")
+    @DeleteMapping ("{id}")
     @Operation(
             summary = "Delete an existing post",
             description = ""
     )
-
-    public String DelectPost(@PathVariable Integer id){
+    public String delete(@PathVariable Integer id){
         return "Delete post '%s'".formatted(id);
     }
 
-    @GetMapping("/sorted")
+    @GetMapping("sorted")
     @Operation(
             summary = "Retrieve all posts ordered by creation date",
             description = "Returns all posts sorted by their creation dates in descending order."
@@ -62,7 +72,7 @@ public class PostController {
 
         return "postService.findAllSortedByCreatedDateDesc()";
     }
-    @GetMapping("/{categoryId}")
+    @GetMapping("{categoryId}")
     @Operation(
             summary = "Retrieve all posts for a category",
             description = "Returns all posts associated with the specified category ID."

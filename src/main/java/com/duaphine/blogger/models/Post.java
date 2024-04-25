@@ -6,10 +6,10 @@ import java.util.UUID;
 public class Post {
     private UUID id;
 
-    private UUID category_id;
+    private Category category;
     private String title;
     private String content;
-    private Date created_date;
+    private Date createdDate;
 
     public UUID getId() {
         return id;
@@ -35,19 +35,22 @@ public class Post {
         this.content = content;
     }
 
-    public Date getCreated_date() {
-        return created_date;
+
+
+
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCreated_date(Date created_date) {
-        this.created_date = created_date;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
-    public UUID getCategory_id() {
-        return category_id;
+    public Date getCreatedDate() {
+        return createdDate;
     }
 
-    public void setCategory_id(UUID category_id) {
-        this.category_id = category_id;
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 }

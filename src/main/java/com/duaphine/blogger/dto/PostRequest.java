@@ -1,11 +1,16 @@
 package com.duaphine.blogger.dto;
 
+import com.duaphine.blogger.models.Category;
+
+import java.util.Date;
 import java.util.UUID;
 
-public class UpdatePostRequest {
+public class PostRequest {
     private UUID id;
     private String title;
     private String content;
+    private Date createdDate;
+    private Category category;
 
     public UUID getId() {
         return id;
@@ -31,12 +36,19 @@ public class UpdatePostRequest {
         this.content = content;
     }
 
-    public UpdatePostRequest() {
+    public Date getCreatedDate() {
+        return createdDate;
     }
 
-    public UpdatePostRequest(UUID id, String title, String content) {
-        this.id = id;
-        this.title = title;
-        this.content = content;
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }
