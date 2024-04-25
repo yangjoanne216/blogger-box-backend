@@ -3,6 +3,7 @@ package com.duaphine.blogger.controllers;
 import com.duaphine.blogger.dto.CategoryRequest;
 import com.duaphine.blogger.models.Category;
 import com.duaphine.blogger.models.Post;
+import com.duaphine.blogger.services.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.web.bind.annotation.*;
@@ -15,17 +16,14 @@ import java.util.UUID;
 @RequestMapping("/v1/categories")/*Retrieve all categories*/
 public class CategoryController {
 
-    private  final List<Category> categories;
+    private final CategoryService service;
 
-    public CategoryController() {
-      categories = new ArrayList<>();
-      categories.add(new Category(UUID.randomUUID(),"My first category"));
-      categories.add(new Category(UUID.randomUUID(),"My second category"));
-      categories.add(new Category(UUID.randomUUID(),"My thied category"));
+    public CategoryController(CategoryService service) {
+        this.service = service;
     }
 @GetMapping
 public List<Category> getAll(){
-        return categories;
+        return service.getAll();
 }
 
     /*● Retrieve a category by id*/
@@ -35,7 +33,7 @@ public List<Category> getAll(){
         description = ""
 )
 public Category getById( @Parameter(description = "id of categories")@PathVariable UUID id ){
-    return categories.stream().filter(category -> category.getId().equals(id)).findFirst().orElse(null);
+    return service.getById(id);
 }
 
 
@@ -44,12 +42,8 @@ public Category getById( @Parameter(description = "id of categories")@PathVariab
         summary = "creat a new category",
         description = ""
 )
-public  Category  create(@RequestBody CategoryRequest request){
-   Category category = new Category();
-   category.setName(request.getName());
-   category.setId(UUID.randomUUID());
-   categories.add(category);
-   return category;
+public  Category  create(@RequestBody String name){
+  return service.create(name);
 }
 
 @PutMapping("{id}")
@@ -58,9 +52,8 @@ public  Category  create(@RequestBody CategoryRequest request){
         description = ""
 )
 public  Category  update(@PathVariable UUID id,
-                               @RequestBody CategoryRequest request) {
-    categories.stream().filter(c->c.getId().equals(id)).findFirst().ifPresent(c->c.setName(request.getName()));
-    return categories.get(0);
+                               @RequestBody String name) {
+return service.updateName(id,name);
 }
 
 @DeleteMapping ("{id}")
@@ -68,20 +61,20 @@ public  Category  update(@PathVariable UUID id,
         summary = "Delete an existing category",
         description = ""
 )
-public boolean delect (@PathVariable UUID id){
-    return true;
+
+public boolean delete (@PathVariable UUID id){
+    return service.deleteById(id);
 }
 
-    @GetMapping("{id}/posts")
-    @Operation(
-            summary = "get all categories by id",
-            description = ""
-    )
-    public List<Post> getAllPostsByCategoryId(@PathVariable UUID categoryId)
-    {
+@GetMapping("{id}/posts")
+@Operation(
+        summary = "get all categories by id",
+        description = ""
+)
+public List<Post> getAllPostsByCategoryId(@PathVariable UUID categoryId)
+   {
         List<Post> posts = new ArrayList<>();
         return posts;
-    }
-
+   }
 
 }
