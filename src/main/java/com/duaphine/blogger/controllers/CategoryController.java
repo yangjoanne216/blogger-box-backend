@@ -51,7 +51,7 @@ public  Category  create(@RequestBody String name){
         summary = "Update the name of a category",
         description = ""
 )
-public  Category  update(@PathVariable UUID id,
+public  Category  updateName(@PathVariable UUID id,
                                @RequestBody String name) {
 return service.updateName(id,name);
 }
@@ -62,10 +62,11 @@ return service.updateName(id,name);
         description = ""
 )
 
-public boolean delete (@PathVariable UUID id){
+public boolean deleteById (@PathVariable UUID id){
     return service.deleteById(id);
 }
 
+/*
 @GetMapping("{id}/posts")
 @Operation(
         summary = "get all categories by id",
@@ -76,5 +77,6 @@ public List<Post> getAllPostsByCategoryId(@PathVariable UUID categoryId)
         List<Post> posts = new ArrayList<>();
         return posts;
    }
+ */
 
 }

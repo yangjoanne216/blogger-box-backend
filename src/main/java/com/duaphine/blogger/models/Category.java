@@ -13,6 +13,9 @@ public class Category {
 
     }
 
+    public Category(UUID categoryId) {
+    }
+
     public UUID getId() {
         return id;
     }

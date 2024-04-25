@@ -1,5 +1,6 @@
 package com.duaphine.blogger.models;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -9,7 +10,7 @@ public class Post {
     private Category category;
     private String title;
     private String content;
-    private Date createdDate;
+    private LocalDateTime createdDate;
 
     public UUID getId() {
         return id;
@@ -46,11 +47,12 @@ public class Post {
         this.category = category;
     }
 
-    public Date getCreatedDate() {
+
+    public LocalDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
 }
