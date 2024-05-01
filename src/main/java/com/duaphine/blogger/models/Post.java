@@ -28,6 +28,13 @@ public class Post {
     public Post(){
 
     }
+
+    public Post(String title, String content, UUID categoryId) {
+        this.title=title;
+        this.content=content;
+        //this.category=categoryId;
+    }
+
     public UUID getId() {
         return id;
     }

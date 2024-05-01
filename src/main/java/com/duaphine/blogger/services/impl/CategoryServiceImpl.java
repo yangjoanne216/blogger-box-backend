@@ -11,15 +11,10 @@ import java.util.UUID;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
-    private final List<Category>  categories;
     private final CategoryRepository repository;
 
     public CategoryServiceImpl(CategoryRepository repository) {
         this.repository = repository;
-        categories = new ArrayList<>();
-        categories.add(new Category(UUID.randomUUID(),"My first category"));
-        categories.add(new Category(UUID.randomUUID(),"My second category"));
-        categories.add(new Category(UUID.randomUUID(),"My thied category"));
     }
 
     @Override
