@@ -48,4 +48,8 @@ public class CategoryServiceImpl implements CategoryService {
         repository.deleteById(id);
         return true;
     }
+
+    public List<Category> getAllByName(String name) {
+        return repository.findAllByName(name);
+    }
 }

@@ -34,6 +34,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public List<Post> getAllByTitleOrContent(String search) {
+        return repository.findAllByTitleOrContent(search);
+    }
+
+    @Override
     public Post getById(UUID id) {
         return repository.findById(id).orElse(null);
     }
