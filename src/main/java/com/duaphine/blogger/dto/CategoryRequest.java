@@ -2,8 +2,6 @@ package com.duaphine.blogger.dto;
 
 public class CategoryRequest {
     private String name;
-
-
     public String getName() {
         return name;
     }

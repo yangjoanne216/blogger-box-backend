@@ -28,7 +28,7 @@ public class CategoryController {
 @Operation(
         summary = "Retrieve all categories or search by name",
         description = "Returns all categories if no name is provided. If a name parameter is provided, returns categories that match the name string.")
-public List<Category> getAll(@Parameter(description = "Optional search string to filter categories by name. If omitted, all categories are returned.")@RequestParam String name){
+public List<Category> getAll(@Parameter(description = "Optional search string to filter categories by name. If omitted, all categories are returned.")@RequestParam(required = false) String name){
         return name==null|| name.isBlank()?service.getAll():service.getAllByName(name);
 }
 
