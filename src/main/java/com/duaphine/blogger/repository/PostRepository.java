@@ -13,10 +13,10 @@ public interface PostRepository extends JpaRepository<Post, UUID> {
     @Query("""
             SELECT p
             FROM Post p
-            WHERE p.title LIKE CONCAT('%', :search, '%') 
-               OR p.content LIKE CONCAT('%', :search, '%')
+            WHERE p.title LIKE CONCAT('%', :search, '%') OR p.content LIKE CONCAT('%', :search, '%')
             """)
     List<Post> findAllByTitleOrContent(@Param("search") String search);
     List<Post> findAllByCategoryId(UUID categoryId);
+    List<Post> findAllByOrderByCreatedDateDesc();
 
 }

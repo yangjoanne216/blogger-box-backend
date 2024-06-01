@@ -13,5 +13,5 @@ public interface PostService {
     Post create(String title, String content, UUID categoryId);
     Post update(UUID id, String title, String content);
     boolean deleteById(UUID id);
-
+    List<Post> findAllByOrderByCreatedDateDesc();
 }

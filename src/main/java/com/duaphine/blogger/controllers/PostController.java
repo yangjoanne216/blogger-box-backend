@@ -22,18 +22,9 @@ public class PostController {
     public PostController(PostService service) {
         this.service = service;
     }
-    @GetMapping("by-category/{categoryId}")
-    @Operation(
-            summary = "Retrieve all posts for a category",
-            description = "Returns all posts associated with the specified category ID."
-    )
-    public List<Post> getAllByCategoryId(@Parameter(description = "The unique identifier (UUID) of the category")@PathVariable UUID categoryId) {
-        return service.getAllByCategoryId(categoryId) ;
-    }
-
     @GetMapping
     @Operation(
-            summary = "Retrieve all posts for a category by title or content",
+            summary = "Retrieve all posts (you can also search a post by title or content)",
             description = "Returns all posts if no search parameter is provided. If a search parameter is provided, it returns posts that contain the search string in their title or content."
     )
     public List<Post> getAll(@Parameter(description = "Optional search string to filter posts by title or content. If omitted, all posts are returned.")@RequestParam(required = false) String search){
@@ -43,7 +34,14 @@ public class PostController {
             return service.getAllByTitleOrContent(search);
         }
     }
-
+    @GetMapping("by-category/{categoryId}")
+    @Operation(
+            summary = "Retrieve all posts for a category",
+            description = "Returns all posts associated with the specified category ID."
+    )
+    public List<Post> getAllByCategoryId(@Parameter(description = "The unique identifier (UUID) of the category")@PathVariable UUID categoryId) {
+        return service.getAllByCategoryId(categoryId) ;
+    }
 
     @GetMapping("{id}")
     @Operation(
@@ -83,15 +81,15 @@ public class PostController {
         return service.deleteById(id);
     }
     
-    /*
+
     @GetMapping("sorted")
     @Operation(
             summary = "Retrieve all posts ordered by creation date",
             description = "Returns all posts sorted by their creation dates in descending order."
     )
-    public String retrievePostsOrderedByCreationDate() {
+    public List<Post> retrievePostsOrderedByCreatedDate() {
 
-        return "postService.findAllSortedByCreatedDateDesc()";
-    }*/
+        return service.findAllByOrderByCreatedDateDesc();
+    }
 
 }

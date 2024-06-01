@@ -74,4 +74,8 @@ public class PostServiceImpl implements PostService {
         repository.deleteById(id);
         return true;
     }
+
+    public List<Post> findAllByOrderByCreatedDateDesc() {
+        return repository.findAllByOrderByCreatedDateDesc();
+    }
 }
