@@ -1,12 +1,15 @@
 package com.duaphine.blogger.services.impl;
 
+import com.duaphine.blogger.exceptions.CategoryNameAlreadyExistsException;
+import com.duaphine.blogger.exceptions.CategoryNotFoundByIdException;
+import com.duaphine.blogger.exceptions.NoCategoryNameContainsStringException;
 import com.duaphine.blogger.models.Category;
 import com.duaphine.blogger.repository.CategoryRepository;
 import com.duaphine.blogger.services.CategoryService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -23,33 +26,33 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category getById(UUID id) {
-        return repository.findById(id).orElse(null);
-    }
-
+    public Category getById(UUID id) throws CategoryNotFoundByIdException {
+        return repository.findById(id).orElseThrow(()->new CategoryNotFoundByIdException(id));}
     @Override
-    public Category create(String name) {
+    public Category create(String name) throws CategoryNameAlreadyExistsException {
         Category category = new Category(name);
-        return repository.save(category);
-    }
-
-    @Override
-    public Category updateName(UUID id, String newName) {
-        Category category = getById(id);
-        if(category==null){
-            return null;
+        if(repository.existsByName(name)){
+            throw new CategoryNameAlreadyExistsException(name);
         }
-        category.setName(newName);
         return repository.save(category);
     }
 
     @Override
-    public boolean deleteById(UUID id) {
+    public Category updateName(UUID id, String newName) throws CategoryNotFoundByIdException {
+        Category category = repository.findById(id).orElseThrow(()->new CategoryNotFoundByIdException(id));
+        return repository.save(category);
+    }
+
+    @Override
+    public boolean deleteById(UUID id) throws CategoryNotFoundByIdException {
+        if(!repository.existsById(id)){
+            throw new CategoryNotFoundByIdException(id);
+        }
         repository.deleteById(id);
         return true;
     }
 
-    public List<Category> getAllByName(String name) {
-        return repository.findAllByName(name);
+    public List<Category> getByNameFragment(String nameFragment) throws NoCategoryNameContainsStringException {
+        return repository.findAllByName(nameFragment).orElseThrow(()->new NoCategoryNameContainsStringException(nameFragment));
     }
 }
