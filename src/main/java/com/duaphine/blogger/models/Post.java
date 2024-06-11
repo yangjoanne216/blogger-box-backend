@@ -13,6 +13,7 @@ public class Post {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @ManyToOne
