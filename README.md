@@ -20,10 +20,6 @@ This is the backend service for the Blogger-Box application. It is built using S
 ```bash
 mvn clean install
 ```
-### Run the application
-```bash
-ng serve
-```
 The application will start on: http://localhost:8080
 ## API Endpoints
 ### Category Endpoints
